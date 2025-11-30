@@ -2,54 +2,77 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Rebeca ❤️</title>
-    <!-- Fuentes de Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
     <style>
-        /* --- RESET Y ESTILOS BASE --- */
+        /* --- VARIABLES Y CONFIGURACIÓN --- */
+        :root {
+            --primary-color: #d45d79;   /* Rosa profundo */
+            --accent-color: #ea90b0;    /* Rosa pastel suave */
+            --bg-start: #fff0f3;
+            --bg-end: #ffe4e9;
+            --text-main: #4a4a4a;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --shadow-soft: 0 10px 40px rgba(212, 93, 121, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body {
-            font-family: "Crimson Text", serif;
-            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-            user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- FONDO ANIMADO --- */
-        .hearts-background {
+        body {
+            font-family: "Cormorant Garamond", serif;
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-main);
+            position: relative;
+        }
+
+        /* --- TEXTURA DE RUIDO (Efecto Papel/Cine) --- */
+        .noise-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: 50;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- FONDO DE CORAZONES --- */
+        .hearts-background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
             z-index: 0;
-            overflow: hidden;
         }
 
         .bg-heart {
             position: absolute;
-            color: rgba(255, 182, 193, 0.4);
-            animation: floatBackground 15s linear infinite;
+            color: var(--accent-color);
+            opacity: 0;
+            animation: floatBackground 12s ease-in-out infinite;
             bottom: -50px;
+            filter: blur(1px);
         }
 
         @keyframes floatBackground {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+            20% { opacity: 0.6; }
+            50% { transform: translateY(-50vh) rotate(180deg) translateX(20px); opacity: 0.4; }
+            100% { transform: translateY(-110vh) rotate(360deg) translateX(-20px); opacity: 0; }
         }
 
-        /* --- CONTENEDOR PRINCIPAL --- */
+        /* --- LAYOUT PRINCIPAL --- */
         .container {
             display: flex;
             flex-direction: column;
@@ -59,26 +82,27 @@
             padding: 20px;
             position: relative;
             z-index: 2;
+            perspective: 1000px;
         }
 
-        /* --- SOBRE (ENVELOPE) --- */
+        /* --- SOBRE MEJORADO --- */
         .envelope-wrapper {
             position: relative;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .envelope-wrapper:hover {
-            transform: scale(1.02);
+            transform: scale(1.03) rotate(1deg);
         }
 
         .envelope {
-            width: 300px;
-            height: 200px;
-            background: #ff5e6c;
+            width: 320px;
+            height: 220px;
+            background: #ff6b81;
             position: relative;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.15);
             z-index: 2;
         }
 
@@ -89,9 +113,9 @@
             left: 0;
             width: 0;
             height: 0;
-            border-left: 150px solid transparent;
-            border-right: 150px solid transparent;
-            border-top: 100px solid #ff7a85;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid #ff8597;
             z-index: 1;
         }
 
@@ -102,11 +126,14 @@
             left: 0;
             width: 0;
             height: 0;
-            border-left: 150px solid #ff4757;
-            border-right: 150px solid #ff4757;
-            border-bottom: 100px solid transparent;
-            border-radius: 0 0 10px 10px;
+            border-left: 160px solid #d45d79;
+            border-right: 160px solid #d45d79;
+            border-bottom: 110px solid transparent;
+            border-radius: 0 0 12px 12px;
             z-index: 3;
+            transform: rotate(180deg);
+            top: auto;
+            bottom: 0;
         }
 
         .flap {
@@ -115,26 +142,37 @@
             left: 0;
             width: 0;
             height: 0;
-            border-left: 150px solid transparent;
-            border-right: 150px solid transparent;
-            border-top: 110px solid #ff5e6c;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 120px solid #ff6b81;
             z-index: 4;
             transform-origin: top;
-            transition: transform 0.6s ease, z-index 0.2s;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s;
         }
 
+        /* Sello de Cera */
         .seal {
             position: absolute;
-            bottom: 100px;
+            bottom: 90px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 2rem;
+            width: 45px;
+            height: 45px;
+            background: #c0392b;
+            border-radius: 50%;
             z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.8);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2), inset 0 2px 5px rgba(255,255,255,0.2);
+            border: 2px dashed rgba(0,0,0,0.1);
             transition: transform 0.3s;
         }
         
         .envelope-wrapper:hover .seal {
-            transform: translateX(-50%) scale(1.2);
+            transform: translateX(-50%) scale(1.1);
         }
 
         .envelope-wrapper.open .flap {
@@ -143,256 +181,267 @@
         }
         
         .envelope-wrapper.open .envelope {
-            animation: fallDown 1s forwards;
+            animation: fallAndFade 1.2s forwards ease-in-out;
         }
 
-        @keyframes fallDown {
+        @keyframes fallAndFade {
             0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(200px) scale(0.5); opacity: 0; display: none; }
+            100% { transform: translateY(300px) scale(0.8); opacity: 0; pointer-events: none; }
         }
 
         .click-instruction {
-            margin-top: 30px;
-            color: #ff4757;
+            margin-top: 40px;
+            color: var(--primary-color);
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            animation: pulse 1.5s infinite;
+            font-weight: 500;
+            animation: pulseText 2s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; transform: scale(1.05); }
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; letter-spacing: 4px; }
         }
 
-        /* --- CARTA ABIERTA --- */
+        /* --- CARTA (Glassmorphism) --- */
         .letter-container {
             display: none;
             width: 100%;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.15);
-            position: relative;
-            animation: slideUp 1s ease forwards;
-            margin-top: 20px;
-            margin-bottom: 50px;
-            border: 1px solid rgba(233, 30, 99, 0.1);
+            max-width: 650px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+            animation: slideUpFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            margin: 20px 0 60px 0;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(60px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .letter-header h1 {
             font-family: "Great Vibes", cursive;
-            font-size: 3rem;
-            color: #d63384;
+            font-size: 3.8rem;
+            color: var(--primary-color);
             text-align: center;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 5px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
         }
 
         .date {
             text-align: center;
             color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 30px;
+            font-size: 1rem;
+            margin-bottom: 40px;
             font-style: italic;
+            font-family: "Cormorant Garamond", serif;
+            position: relative;
+        }
+        
+        .date::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 1px;
+            background: var(--accent-color);
+            margin: 10px auto 0;
         }
 
+        /* --- TEXTO DE LA CARTA (Normalizado) --- */
         .letter-content p {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: #4a4a4a;
-            margin-bottom: 20px;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: #3d3d3d;
+            margin-bottom: 25px;
             text-align: justify;
-        }
-        .letter-content,
-        .letter-content * {
-           font-family: "Crimson Text", serif !important;
+            font-weight: 400;
+            /* Se eliminó el estilo de letra capital rosa */
         }
 
         .highlight {
-            color: #d63384;
+            color: var(--primary-color);
             font-weight: 600;
+            background: linear-gradient(to top, rgba(255, 182, 193, 0.3) 0%, transparent 40%);
         }
 
-        /* --- RULETA DE FOTOS Y VIDEOS --- */
+        /* --- CARRUSEL TIPO POLAROID --- */
         .photo-carousel {
-            margin: 30px 0;
+            margin: 40px 0;
             position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            background: #fff;
-            padding: 10px;
+            background: transparent;
             text-align: center;
         }
 
         .carousel-caption {
             font-family: 'Great Vibes', cursive;
-            color: #d63384;
-            font-size: 1.6rem;
-            margin-bottom: 5px;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .polaroid-frame {
+            background: #fff;
+            padding: 12px 12px 35px 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transform: rotate(-1deg);
+            transition: transform 0.3s;
+            display: inline-block;
+            max-width: 100%;
         }
         
-        .carousel-subcaption {
-            font-size: 0.8rem;
-            color: #aaa;
-            margin-bottom: 10px;
-            font-style: italic;
+        .polaroid-frame:hover {
+            transform: rotate(0deg) scale(1.01);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .carousel-track {
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 350px;
-            background: #f8f9fa;
-            border-radius: 8px;
+            min-height: 300px;
             position: relative;
             overflow: hidden;
-            touch-action: pan-y; 
-            cursor: grab;
-        }
-        
-        .carousel-track:active {
-            cursor: grabbing;
         }
 
         .carousel-media {
             max-width: 100%;
             max-height: 350px;
-            border-radius: 5px;
             display: none;
             opacity: 0;
-            object-fit: contain;
-            pointer-events: none;
+            object-fit: cover;
+            border-radius: 2px;
+            filter: sepia(10%);
         }
 
-        /* EFECTO DE TRANSICIÓN SUAVE (FADE + SCALE) */
         .carousel-media.active {
             display: block;
-            animation: fadeInScale 0.8s ease forwards;
+            animation: softFade 1.5s ease forwards;
         }
 
-        @keyframes fadeInScale {
-            0% {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+        @keyframes softFade {
+            0% { opacity: 0; filter: blur(5px) sepia(10%); }
+            100% { opacity: 1; filter: blur(0) sepia(10%); }
         }
 
         /* --- FIRMA --- */
         .signature {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ffccd5;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(212, 93, 121, 0.2);
+            position: relative;
+        }
+        
+        .signature::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-start);
+            padding: 0 10px;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            letter-spacing: 2px;
         }
 
         .signature p {
             font-family: "Great Vibes", cursive;
-            font-size: 2.2rem;
-            color: #d63384;
+            font-size: 2.5rem;
+            color: var(--primary-color);
             margin: 5px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+        
+        .signature em {
+            font-family: "Montserrat", sans-serif;
+            font-size: 0.9rem;
+            color: #777;
+            letter-spacing: 1px;
+            display: block;
+            margin-top: 5px;
         }
 
-        /* --- EFECTO CLICK CORAZÓN --- */
-        .click-heart {
-            position: fixed;
-            font-size: 1.5rem;
-            pointer-events: none;
-            animation: floatAndFade 1s ease-out forwards;
-            z-index: 9999;
-        }
-
-        @keyframes floatAndFade {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-            50% { transform: translate(-50%, -100%) scale(1.2); opacity: 0.8; }
-            100% { transform: translate(-50%, -200%) scale(1.5); opacity: 0; }
-        }
-
-        /* --- CONTROLES MÚSICA --- */
+        /* --- BOTÓN MÚSICA --- */
         .music-btn {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 45px;
-            height: 45px;
-            background: white;
+            top: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(5px);
             border-radius: 50%;
-            border: 2px solid #ff5e6c;
-            color: #ff5e6c;
+            border: 1px solid var(--accent-color);
+            color: var(--primary-color);
             font-size: 1.2rem;
             cursor: pointer;
             z-index: 100;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .music-btn:hover {
             transform: scale(1.1);
-            background: #ff5e6c;
-            color: white;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(212, 93, 121, 0.4);
         }
 
         .music-btn.playing {
-            animation: rotateMusic 3s linear infinite;
+            border-color: var(--primary-color);
+            animation: pulseMusic 2s infinite;
         }
 
-        @keyframes rotateMusic {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes pulseMusic {
+            0% { box-shadow: 0 0 0 0 rgba(212, 93, 121, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(212, 93, 121, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 93, 121, 0); }
         }
 
+        /* --- RESPONSIVE --- */
         @media (max-width: 600px) {
-            .letter-container { padding: 25px; margin: 10px; width: 95%; }
-            .envelope-wrapper { transform: scale(0.8); }
-            .letter-header h1 { font-size: 2.2rem; }
-            .carousel-track { min-height: 250px; }
-            .carousel-media { max-height: 250px; }
+            .letter-container { padding: 30px 20px; width: 92%; }
+            .envelope-wrapper { transform: scale(0.85); }
+            .letter-header h1 { font-size: 2.8rem; }
+            .letter-content p { font-size: 1.15rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Fondo -->
+    <div class="noise-overlay"></div>
     <div class="hearts-background" id="bgHearts"></div>
 
-    <!-- Audio -->
     <audio id="backgroundMusic" loop>
         <source src="Musica.mp3" type="audio/mpeg">
     </audio>
 
-    <button id="musicToggle" class="music-btn">🎵</button>
+    <button id="musicToggle" class="music-btn" aria-label="Play Music">🎵</button>
 
     <div class="container">
         
-        <!-- Sobre -->
         <div class="envelope-wrapper" id="envelopeWrapper">
             <div class="flap"></div>
             <div class="envelope">
-                <div class="seal">❤️</div>
+                <div class="seal">❤</div>
             </div>
-            <div class="click-instruction" id="instruction">Toca el sobre para abrir</div>
+            <div class="click-instruction" id="instruction">Toca para abrir</div>
         </div>
 
-        <!-- Carta -->
         <div class="letter-container" id="letter">
             <div class="letter-header">
-                <h1>Para Rebeca ❤️</h1>
+                <h1>Para Rebeca</h1>
                 <div class="date">De mi corazón al tuyo</div>
             </div>
 
@@ -403,52 +452,31 @@
 
                 <p>Quiero construir algo hermoso contigo, algo real y duradero. Quiero ser quien te apoye en tus sueños, quien te cuide y quien te haga reír hasta que te duela la panza. Eres lo más bonito e importante que me ha pasado, y prometo cuidarnos siempre.</p>
 
-                <!-- CARRUSEL (Fotos y Videos Intercalados) -->
                 <div class="photo-carousel">
-                    <div class="carousel-caption">✨❤</div>
-                    <div class="carousel-track" id="carouselTrack">
-                        
-                        <!-- 1. Foto -->
-                        <img src="foto1.jpg" class="carousel-media active" onerror="this.style.display='none'">
-                        
-                        <!-- 1. Video -->
-                        <video src="video1.mp4" class="carousel-media" muted playsinline onerror="this.style.display='none'"></video>
-                        
-                        <!-- 2. Foto -->
-                        <img src="foto2.jpg" class="carousel-media" onerror="this.style.display='none'">
-                        
-                        <!-- 2. Video -->
-                        <video src="video2.mp4" class="carousel-media" muted playsinline onerror="this.style.display='none'"></video>
-                        
-                        <!-- 3. Foto -->
-                        <img src="foto3.jpg" class="carousel-media" onerror="this.style.display='none'">
-
-                         <!-- 3. Video -->
-                         <video src="video3.mp4" class="carousel-media" muted playsinline onerror="this.style.display='none'"></video>
-
-                        <!-- 4. Foto -->
-                        <img src="foto4.jpg" class="carousel-media" onerror="this.style.display='none'">
-
-                         <!-- 4. Video -->
-                         <video src="video4.mp4" class="carousel-media" muted playsinline onerror="this.style.display='none'"></video>
-
-                        <!-- 5. Foto -->
-                        <img src="foto5.jpg" class="carousel-media" onerror="this.style.display='none'">
-
-                         <!-- 5. Video -->
-                         <video src="video5.mp4" class="carousel-media" muted playsinline onerror="this.style.display='none'"></video>
-                        
-                        <p id="noPhotosMsg" style="display:none; color:#999; font-size:0.8rem; margin:auto;">(Cargando recuerdos...)</p>
+                    <div class="carousel-caption">Nuestros Recuerdos ✨</div>
+                    <div class="polaroid-frame">
+                        <div class="carousel-track" id="carouselTrack">
+                            <img src="foto1.jpg" class="carousel-media active" onerror="this.style.display='none'">
+                            <video src="video1.mp4" class="carousel-media" muted playsinline onerror="this.style.display='none'"></video>
+                            <img src="foto2.jpg" class="carousel-media" onerror="this.style.display='none'">
+                            <video src="video2.mp4" class="carousel-media" muted playsinline onerror="this.style.display='none'"></video>
+                            <img src="foto3.jpg" class="carousel-media" onerror="this.style.display='none'">
+                            <video src="video3.mp4" class="carousel-media" muted playsinline onerror="this.style.display='none'"></video>
+                            <img src="foto4.jpg" class="carousel-media" onerror="this.style.display='none'">
+                            <video src="video4.mp4" class="carousel-media" muted playsinline onerror="this.style.display='none'"></video>
+                            <img src="foto5.jpg" class="carousel-media" onerror="this.style.display='none'">
+                            <video src="video5.mp4" class="carousel-media" muted playsinline onerror="this.style.display='none'"></video>
+                        </div>
                     </div>
                 </div>
 
                 <p>Gracias por dejarme ser parte de tu vida y por convertirte en la parte más esencial de la mía. No sé qué nos depare el futuro, pero mientras sea de tu mano, sé que será maravilloso.</p>
 
-                <p class="final-message"><span class="highlight">Te amo con todo mi corazón mi amor.</span></p>
+                <p style="text-align: center; margin-top: 30px;"><span class="highlight">Te amo con todo mi corazón.</span></p>
 
                 <div class="signature">
-                    <p><strong>Con amor ❤️</strong></p>
-                    <p><em>Tu Novio el loquillo 🤪🥴✨</em></p>
+                    <p>Con amor ❤</p>
+                    <em>Tu Novio el loquillo 🤪🥴✨</em>
                 </div>
             </div>
         </div>
@@ -463,27 +491,27 @@
             const backgroundMusic = document.getElementById("backgroundMusic");
             const bgHearts = document.getElementById("bgHearts");
             
-            // --- 1. LÓGICA GENERAL ---
             let isOpened = false;
             let musicPlaying = false;
 
+            // --- APERTURA ---
             envelopeWrapper.addEventListener("click", () => {
                 if (!isOpened) {
                     isOpened = true;
                     envelopeWrapper.classList.add("open");
-                    instruction.style.display = "none";
-                    
+                    instruction.style.opacity = "0";
+                    playMusic();
                     setTimeout(() => {
                         envelopeWrapper.style.display = "none";
                         letter.style.display = "block";
-                        playMusic();
-                        createConfettiHearts();
-                        // Iniciar el carrusel solo cuando se abre la carta
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        createBurstHearts();
                         scheduleNextSlide();
-                    }, 800);
+                    }, 1000);
                 }
             });
 
+            // --- MÚSICA ---
             musicToggle.addEventListener("click", () => {
                 if (musicPlaying) {
                     backgroundMusic.pause();
@@ -496,36 +524,47 @@
             });
 
             function playMusic() {
+                backgroundMusic.volume = 0.5;
                 backgroundMusic.play().then(() => {
                     musicToggle.textContent = "🎶";
                     musicToggle.classList.add("playing");
                     musicPlaying = true;
-                }).catch(e => console.log("Audio requiere interacción"));
+                }).catch(() => console.log("Audio requiere interacción"));
             }
 
-            // --- 2. FONDO ANIMADO ---
+            // --- FONDO ANIMADO ---
             function createFloatingHearts() {
-                const colors = ["❤️", "💖", "💕", "💗"];
+                const colors = ["#d45d79", "#ea90b0", "#ffcad4"];
                 const heart = document.createElement("div");
                 heart.classList.add("bg-heart");
-                heart.innerHTML = colors[Math.floor(Math.random() * colors.length)];
+                heart.innerHTML = "❤";
                 heart.style.left = Math.random() * 100 + "vw";
-                heart.style.fontSize = (Math.random() * 20 + 10) + "px";
-                heart.style.animationDuration = (Math.random() * 10 + 5) + "s";
+                heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                heart.style.animationDuration = (Math.random() * 5 + 10) + "s";
                 bgHearts.appendChild(heart);
                 setTimeout(() => { heart.remove(); }, 15000);
             }
-            setInterval(createFloatingHearts, 500);
+            setInterval(createFloatingHearts, 800);
 
-            // --- 3. EFECTO CLICK CORAZÓN ---
+            // --- CLICK CORAZÓN ---
             const addHeart = (x, y) => {
                 const heart = document.createElement('div');
-                heart.classList.add('click-heart');
-                heart.innerHTML = "❤️";
+                heart.innerHTML = "❤";
+                heart.style.position = 'fixed';
                 heart.style.left = x + 'px';
                 heart.style.top = y + 'px';
-                const randomRotate = Math.random() * 40 - 20; 
-                heart.style.transform = `translate(-50%, -50%) rotate(${randomRotate}deg)`;
+                heart.style.color = '#d45d79';
+                heart.style.fontSize = '1.5rem';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '9999';
+                heart.style.transform = 'translate(-50%, -50%)';
+                heart.style.animation = 'floatAndFade 1s ease-out forwards';
+                // Fallback animation inline
+                heart.animate([
+                    { transform: 'translate(-50%, -50%) scale(0.5)', opacity: 1 },
+                    { transform: 'translate(-50%, -150%) scale(1.5)', opacity: 0 }
+                ], { duration: 1000, easing: 'ease-out' });
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 1000);
             };
@@ -535,23 +574,15 @@
                 addHeart(e.clientX, e.clientY);
             });
 
-            document.addEventListener('touchstart', (e) => {
-                const touch = e.touches[0];
-                addHeart(touch.clientX, touch.clientY);
-            }, {passive: true});
-
-            // --- 4. CARRUSEL INTELIGENTE (TIEMPOS VARIABLES) ---
+            // --- CARRUSEL ---
             const slides = document.querySelectorAll('.carousel-media');
-            const track = document.getElementById('carouselTrack');
             let currentIndex = 0;
             let slideTimeout;
 
             function showNextSlide() {
-                // Calcular siguiente índice
                 let nextIndex = currentIndex + 1;
                 if (nextIndex >= slides.length) nextIndex = 0;
                 
-                // Ocultar actual
                 const currentSlide = slides[currentIndex];
                 currentSlide.classList.remove('active');
                 if(currentSlide.tagName === 'VIDEO') {
@@ -559,98 +590,74 @@
                     currentSlide.currentTime = 0;
                 }
 
-                // Mostrar siguiente (buscando uno visible)
-                // Nota: Asumimos que los archivos existen. Si no, el error handler los oculta.
-                // Aquí simplificamos asumiendo que el usuario pondrá los archivos correctos.
-                
                 currentIndex = nextIndex;
                 const nextSlide = slides[currentIndex];
                 
-                // Si el slide está oculto (error), saltar rápido
                 if(nextSlide.style.display === 'none') {
-                     // Recursión segura con timeout mínimo
                      setTimeout(showNextSlide, 50);
                      return;
                 }
-
                 nextSlide.classList.add('active');
-                
-                // Programar el SIGUIENTE cambio según el tipo de este slide
                 scheduleNextSlide();
             }
 
             function scheduleNextSlide() {
-                if(!isOpened) return; // Seguridad
-
+                if(!isOpened) return; 
                 const currentSlide = slides[currentIndex];
-                
-                // Limpiar cualquier timeout previo
                 if(slideTimeout) clearTimeout(slideTimeout);
 
                 if (currentSlide.tagName === 'VIDEO') {
-                    // SI ES VIDEO: Reproducir y esperar a que termine
                     currentSlide.play().then(() => {
-                        // Cuando termine, llamar a showNextSlide
-                        currentSlide.onended = () => {
-                            showNextSlide();
-                        };
-                    }).catch(e => {
-                        console.log("Error playing video, skipping", e);
-                        // Si falla (ej. formato), saltar en 2 seg
-                        slideTimeout = setTimeout(showNextSlide, 2000);
+                        currentSlide.onended = () => showNextSlide();
+                    }).catch(() => {
+                        slideTimeout = setTimeout(showNextSlide, 3000);
                     });
                 } else {
-                    // SI ES FOTO: Esperar 5 segundos
                     slideTimeout = setTimeout(showNextSlide, 5000);
                 }
             }
 
-            // Swipe Logic (Manual)
+            // Swipe
             let touchStartX = 0;
-            let touchEndX = 0;
-
+            const track = document.getElementById('carouselTrack');
             track.addEventListener('touchstart', e => {
                 touchStartX = e.changedTouches[0].screenX;
-                if(slideTimeout) clearTimeout(slideTimeout); // Pausar automático
+                if(slideTimeout) clearTimeout(slideTimeout);
             }, {passive: true});
 
             track.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            }, {passive: true});
-            
-            function handleSwipe() {
-                const swipeThreshold = 50;
-                if (touchEndX < touchStartX - swipeThreshold) {
-                    // Swipe Izquierda (Siguiente)
-                    // Forzamos el cambio inmediato, el cual reprogramará el siguiente
-                    // Detenemos el video actual si suena
+                if (e.changedTouches[0].screenX < touchStartX - 50) {
                     const currentSlide = slides[currentIndex];
                     if(currentSlide.tagName === 'VIDEO') {
                         currentSlide.pause();
                         currentSlide.currentTime = 0;
-                        currentSlide.onended = null; // Quitar listener
+                        currentSlide.onended = null;
                     }
                     showNextSlide();
                 }
-                // (Opcional: Swipe Derecha para anterior, pero complica la lógica de videos
-                //  así que mantenemos solo avance para simplicidad y fluidez)
-            }
+            }, {passive: true});
 
-            function createConfettiHearts() {
-                for (let i = 0; i < 30; i++) {
+            // --- EXPLOSIÓN DE CORAZONES ---
+            function createBurstHearts() {
+                for (let i = 0; i < 20; i++) {
                     setTimeout(() => {
                         const heart = document.createElement("div");
                         heart.innerHTML = "💖";
                         heart.style.position = "fixed";
-                        heart.style.left = Math.random() * 100 + "%";
-                        heart.style.top = "-10px";
-                        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+                        heart.style.left = "50%";
+                        heart.style.top = "50%";
+                        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
                         heart.style.zIndex = "1000";
-                        heart.style.animation = `floatBackground 3s linear forwards`;
+                        const angle = Math.random() * Math.PI * 2;
+                        const velocity = Math.random() * 200 + 100;
+                        const tx = Math.cos(angle) * velocity;
+                        const ty = Math.sin(angle) * velocity;
+                        heart.animate([
+                            { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
+                            { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1)`, opacity: 0 }
+                        ], { duration: 1500, easing: 'cubic-bezier(0, .9, .57, 1)' }).onfinish = () => heart.remove();
                         document.body.appendChild(heart);
-                        setTimeout(() => heart.remove(), 3000);
-                    }, i * 100);
+                    }, i * 50);
                 }
             }
         });
